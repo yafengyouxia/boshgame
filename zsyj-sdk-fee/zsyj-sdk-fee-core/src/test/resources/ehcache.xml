@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+<diskStore path="Java.io.tmpdir"/>
+
+<!-- 缓存最大数目 maxElementsInMemory="10000" -->
+<!-- 缓存是否永驻内存中 eternal="false"  -->
+<!-- 是否保存到磁盘，当系统当机时 overflowToDisk="true" -->
+<!-- 当缓存闲置 n 秒后销毁 timeToIdleSeconds="300" -->
+<!-- 当缓存存活 n 秒后销毁 -->
+<!-- dynamicConfig="false" 禁用动态刷新配置文件属性 -->
+
+<defaultCache maxElementsInMemory="10000"
+eternal="false"
+overflowToDisk="true"
+timeToIdleSeconds="300"
+timeToLiveSeconds="180"
+diskPersistent="false"
+diskExpiryThreadIntervalSeconds= "120"/>
+
+<cache name = "simpleCaching"  
+           maxElementsInMemory = "100000"  
+           timeToIdleSeconds = "172800"
+           timeToLiveSeconds = "2592000" 
+           eternal = "false"
+           overflowToDisk = "false"
+           memoryStoreEvictionPolicy = "LFU"  
+           dynamicConfig="false"
+/>
+
+</ehcache>

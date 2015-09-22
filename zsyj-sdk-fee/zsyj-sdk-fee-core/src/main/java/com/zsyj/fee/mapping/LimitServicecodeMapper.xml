@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.LimitServicecodeMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.LimitServicecode" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code_id" property="codeId" jdbcType="INTEGER" />
+    <result column="service_code" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="logtime" property="logtime" jdbcType="TIMESTAMP" />
+    <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="tel_code" property="telCode" jdbcType="VARCHAR" />
+    <result column="limit_user_fee_month" property="limitUserFeeMonth" jdbcType="INTEGER" />
+    <result column="limit_user_fee_day" property="limitUserFeeDay" jdbcType="INTEGER" />
+    <result column="limit_total_amount_day" property="limitTotalAmountDay" jdbcType="INTEGER" />
+    <result column="limit_total_amount_month" property="limitTotalAmountMonth" jdbcType="INTEGER" />
+    <result column="close_hour" property="closeHour" jdbcType="VARCHAR" />
+    <result column="sub_type" property="subType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code_id, service_code, logtime, province_code, tel_code, limit_user_fee_month, 
+    limit_user_fee_day, limit_total_amount_day, limit_total_amount_month, close_hour, 
+    sub_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.LimitServicecodeCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cfg_limit_servicecode
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cfg_limit_servicecode
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cfg_limit_servicecode
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zsyj.fee.entity.LimitServicecodeCondition" >
+    delete from cfg_limit_servicecode
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.LimitServicecode" >
+    insert into cfg_limit_servicecode (id, code_id, service_code, 
+      logtime, province_code, tel_code, 
+      limit_user_fee_month, limit_user_fee_day, limit_total_amount_day, 
+      limit_total_amount_month, close_hour, sub_type
+      )
+    values (#{id,jdbcType=INTEGER}, #{codeId,jdbcType=INTEGER}, #{serviceCode,jdbcType=VARCHAR}, 
+      #{logtime,jdbcType=TIMESTAMP}, #{provinceCode,jdbcType=VARCHAR}, #{telCode,jdbcType=VARCHAR}, 
+      #{limitUserFeeMonth,jdbcType=INTEGER}, #{limitUserFeeDay,jdbcType=INTEGER}, #{limitTotalAmountDay,jdbcType=INTEGER}, 
+      #{limitTotalAmountMonth,jdbcType=INTEGER}, #{closeHour,jdbcType=VARCHAR}, #{subType,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.LimitServicecode" >
+    insert into cfg_limit_servicecode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="codeId != null" >
+        code_id,
+      </if>
+      <if test="serviceCode != null" >
+        service_code,
+      </if>
+      <if test="logtime != null" >
+        logtime,
+      </if>
+      <if test="provinceCode != null" >
+        province_code,
+      </if>
+      <if test="telCode != null" >
+        tel_code,
+      </if>
+      <if test="limitUserFeeMonth != null" >
+        limit_user_fee_month,
+      </if>
+      <if test="limitUserFeeDay != null" >
+        limit_user_fee_day,
+      </if>
+      <if test="limitTotalAmountDay != null" >
+        limit_total_amount_day,
+      </if>
+      <if test="limitTotalAmountMonth != null" >
+        limit_total_amount_month,
+      </if>
+      <if test="closeHour != null" >
+        close_hour,
+      </if>
+      <if test="subType != null" >
+        sub_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="codeId != null" >
+        #{codeId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceCode != null" >
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="telCode != null" >
+        #{telCode,jdbcType=VARCHAR},
+      </if>
+      <if test="limitUserFeeMonth != null" >
+        #{limitUserFeeMonth,jdbcType=INTEGER},
+      </if>
+      <if test="limitUserFeeDay != null" >
+        #{limitUserFeeDay,jdbcType=INTEGER},
+      </if>
+      <if test="limitTotalAmountDay != null" >
+        #{limitTotalAmountDay,jdbcType=INTEGER},
+      </if>
+      <if test="limitTotalAmountMonth != null" >
+        #{limitTotalAmountMonth,jdbcType=INTEGER},
+      </if>
+      <if test="closeHour != null" >
+        #{closeHour,jdbcType=VARCHAR},
+      </if>
+      <if test="subType != null" >
+        #{subType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zsyj.fee.entity.LimitServicecodeCondition" resultType="java.lang.Integer" >
+    select count(*) from cfg_limit_servicecode
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cfg_limit_servicecode
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.codeId != null" >
+        code_id = #{record.codeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceCode != null" >
+        service_code = #{record.serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null" >
+        logtime = #{record.logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.provinceCode != null" >
+        province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telCode != null" >
+        tel_code = #{record.telCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitUserFeeMonth != null" >
+        limit_user_fee_month = #{record.limitUserFeeMonth,jdbcType=INTEGER},
+      </if>
+      <if test="record.limitUserFeeDay != null" >
+        limit_user_fee_day = #{record.limitUserFeeDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.limitTotalAmountDay != null" >
+        limit_total_amount_day = #{record.limitTotalAmountDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.limitTotalAmountMonth != null" >
+        limit_total_amount_month = #{record.limitTotalAmountMonth,jdbcType=INTEGER},
+      </if>
+      <if test="record.closeHour != null" >
+        close_hour = #{record.closeHour,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subType != null" >
+        sub_type = #{record.subType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cfg_limit_servicecode
+    set id = #{record.id,jdbcType=INTEGER},
+      code_id = #{record.codeId,jdbcType=INTEGER},
+      service_code = #{record.serviceCode,jdbcType=VARCHAR},
+      logtime = #{record.logtime,jdbcType=TIMESTAMP},
+      province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      tel_code = #{record.telCode,jdbcType=VARCHAR},
+      limit_user_fee_month = #{record.limitUserFeeMonth,jdbcType=INTEGER},
+      limit_user_fee_day = #{record.limitUserFeeDay,jdbcType=INTEGER},
+      limit_total_amount_day = #{record.limitTotalAmountDay,jdbcType=INTEGER},
+      limit_total_amount_month = #{record.limitTotalAmountMonth,jdbcType=INTEGER},
+      close_hour = #{record.closeHour,jdbcType=VARCHAR},
+      sub_type = #{record.subType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.LimitServicecode" >
+    update cfg_limit_servicecode
+    <set >
+      <if test="codeId != null" >
+        code_id = #{codeId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceCode != null" >
+        service_code = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        logtime = #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceCode != null" >
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="telCode != null" >
+        tel_code = #{telCode,jdbcType=VARCHAR},
+      </if>
+      <if test="limitUserFeeMonth != null" >
+        limit_user_fee_month = #{limitUserFeeMonth,jdbcType=INTEGER},
+      </if>
+      <if test="limitUserFeeDay != null" >
+        limit_user_fee_day = #{limitUserFeeDay,jdbcType=INTEGER},
+      </if>
+      <if test="limitTotalAmountDay != null" >
+        limit_total_amount_day = #{limitTotalAmountDay,jdbcType=INTEGER},
+      </if>
+      <if test="limitTotalAmountMonth != null" >
+        limit_total_amount_month = #{limitTotalAmountMonth,jdbcType=INTEGER},
+      </if>
+      <if test="closeHour != null" >
+        close_hour = #{closeHour,jdbcType=VARCHAR},
+      </if>
+      <if test="subType != null" >
+        sub_type = #{subType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.LimitServicecode" >
+    update cfg_limit_servicecode
+    set code_id = #{codeId,jdbcType=INTEGER},
+      service_code = #{serviceCode,jdbcType=VARCHAR},
+      logtime = #{logtime,jdbcType=TIMESTAMP},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      tel_code = #{telCode,jdbcType=VARCHAR},
+      limit_user_fee_month = #{limitUserFeeMonth,jdbcType=INTEGER},
+      limit_user_fee_day = #{limitUserFeeDay,jdbcType=INTEGER},
+      limit_total_amount_day = #{limitTotalAmountDay,jdbcType=INTEGER},
+      limit_total_amount_month = #{limitTotalAmountMonth,jdbcType=INTEGER},
+      close_hour = #{closeHour,jdbcType=VARCHAR},
+      sub_type = #{subType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.SdkSynurlLogMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.SdkSynurlLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cpid" property="cpid" jdbcType="INTEGER" />
+    <result column="sms_config_id" property="smsConfigId" jdbcType="INTEGER" />
+    <result column="syn_url" property="synUrl" jdbcType="VARCHAR" />
+    <result column="post_body" property="postBody" jdbcType="VARCHAR" />
+    <result column="http_method" property="httpMethod" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="link_id" property="linkId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="complete_time" property="completeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, cpid, sms_config_id, syn_url, post_body, http_method, type, link_id, status, 
+    add_time, complete_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.SdkSynurlLogCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sdk_synurl_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sdk_synurl_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sdk_synurl_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zsyj.fee.entity.SdkSynurlLogCondition" >
+    delete from sdk_synurl_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.SdkSynurlLog" >
+    insert into sdk_synurl_log (id, cpid, sms_config_id, 
+      syn_url, post_body, http_method, 
+      type, link_id, status, 
+      add_time, complete_time)
+    values (#{id,jdbcType=INTEGER}, #{cpid,jdbcType=INTEGER}, #{smsConfigId,jdbcType=INTEGER}, 
+      #{synUrl,jdbcType=VARCHAR}, #{postBody,jdbcType=VARCHAR}, #{httpMethod,jdbcType=TINYINT}, 
+      #{type,jdbcType=TINYINT}, #{linkId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.SdkSynurlLog" >
+    insert into sdk_synurl_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cpid != null" >
+        cpid,
+      </if>
+      <if test="smsConfigId != null" >
+        sms_config_id,
+      </if>
+      <if test="synUrl != null" >
+        syn_url,
+      </if>
+      <if test="postBody != null" >
+        post_body,
+      </if>
+      <if test="httpMethod != null" >
+        http_method,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="linkId != null" >
+        link_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="completeTime != null" >
+        complete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cpid != null" >
+        #{cpid,jdbcType=INTEGER},
+      </if>
+      <if test="smsConfigId != null" >
+        #{smsConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="synUrl != null" >
+        #{synUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="postBody != null" >
+        #{postBody,jdbcType=VARCHAR},
+      </if>
+      <if test="httpMethod != null" >
+        #{httpMethod,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="linkId != null" >
+        #{linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zsyj.fee.entity.SdkSynurlLogCondition" resultType="java.lang.Integer" >
+    select count(*) from sdk_synurl_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sdk_synurl_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpid != null" >
+        cpid = #{record.cpid,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsConfigId != null" >
+        sms_config_id = #{record.smsConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="record.synUrl != null" >
+        syn_url = #{record.synUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postBody != null" >
+        post_body = #{record.postBody,jdbcType=VARCHAR},
+      </if>
+      <if test="record.httpMethod != null" >
+        http_method = #{record.httpMethod,jdbcType=TINYINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.linkId != null" >
+        link_id = #{record.linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.completeTime != null" >
+        complete_time = #{record.completeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sdk_synurl_log
+    set id = #{record.id,jdbcType=INTEGER},
+      cpid = #{record.cpid,jdbcType=INTEGER},
+      sms_config_id = #{record.smsConfigId,jdbcType=INTEGER},
+      syn_url = #{record.synUrl,jdbcType=VARCHAR},
+      post_body = #{record.postBody,jdbcType=VARCHAR},
+      http_method = #{record.httpMethod,jdbcType=TINYINT},
+      type = #{record.type,jdbcType=TINYINT},
+      link_id = #{record.linkId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      complete_time = #{record.completeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.SdkSynurlLog" >
+    update sdk_synurl_log
+    <set >
+      <if test="cpid != null" >
+        cpid = #{cpid,jdbcType=INTEGER},
+      </if>
+      <if test="smsConfigId != null" >
+        sms_config_id = #{smsConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="synUrl != null" >
+        syn_url = #{synUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="postBody != null" >
+        post_body = #{postBody,jdbcType=VARCHAR},
+      </if>
+      <if test="httpMethod != null" >
+        http_method = #{httpMethod,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="linkId != null" >
+        link_id = #{linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.SdkSynurlLog" >
+    update sdk_synurl_log
+    set cpid = #{cpid,jdbcType=INTEGER},
+      sms_config_id = #{smsConfigId,jdbcType=INTEGER},
+      syn_url = #{synUrl,jdbcType=VARCHAR},
+      post_body = #{postBody,jdbcType=VARCHAR},
+      http_method = #{httpMethod,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      link_id = #{linkId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      complete_time = #{completeTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

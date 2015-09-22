@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.CfgSdkTroneMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.CfgSdkTrone" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="trone_strategy_id" property="troneStrategyId" jdbcType="INTEGER" />
+    <result column="service_code" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="trone" property="trone" jdbcType="VARCHAR" />
+    <result column="command" property="command" jdbcType="VARCHAR" />
+    <result column="fee" property="fee" jdbcType="DOUBLE" />
+    <result column="confirm_keyword" property="confirmKeyword" jdbcType="VARCHAR" />
+    <result column="confirm_command" property="confirmCommand" jdbcType="VARCHAR" />
+    <result column="confirm_trone" property="confirmTrone" jdbcType="VARCHAR" />
+    <result column="find_rnd_keyword" property="findRndKeyword" jdbcType="VARCHAR" />
+    <result column="delete_text" property="deleteText" jdbcType="VARCHAR" />
+    <result column="delete_number" property="deleteNumber" jdbcType="VARCHAR" />
+    <result column="trone_type" property="troneType" jdbcType="TINYINT" />
+    <result column="sid_cid_only" property="sidCidOnly" jdbcType="VARCHAR" />
+    <result column="helpline" property="helpline" jdbcType="VARCHAR" />
+    <result column="sp_id" property="spId" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="service_name" property="serviceName" jdbcType="VARCHAR" />
+    <result column="divide_ratio" property="divideRatio" jdbcType="DOUBLE" />
+    <result column="is_fresh_pv" property="isFreshPv" jdbcType="TINYINT" />
+    <result column="weight" property="weight" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, trone_strategy_id, service_code, area, trone, command, fee, confirm_keyword, 
+    confirm_command, confirm_trone, find_rnd_keyword, delete_text, delete_number, trone_type, 
+    sid_cid_only, helpline, sp_id, company_name, service_name, divide_ratio, is_fresh_pv, 
+    weight, status, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.CfgSdkTroneCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cfg_sdk_trone
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cfg_sdk_trone
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cfg_sdk_trone
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.CfgSdkTrone" >
+    insert into cfg_sdk_trone (id, name, trone_strategy_id, 
+      service_code, area, trone, 
+      command, fee, confirm_keyword, 
+      confirm_command, confirm_trone, find_rnd_keyword, 
+      delete_text, delete_number, trone_type, 
+      sid_cid_only, helpline, sp_id, 
+      company_name, service_name, divide_ratio, 
+      is_fresh_pv, weight, status, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{troneStrategyId,jdbcType=INTEGER}, 
+      #{serviceCode,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{trone,jdbcType=VARCHAR}, 
+      #{command,jdbcType=VARCHAR}, #{fee,jdbcType=DOUBLE}, #{confirmKeyword,jdbcType=VARCHAR}, 
+      #{confirmCommand,jdbcType=VARCHAR}, #{confirmTrone,jdbcType=VARCHAR}, #{findRndKeyword,jdbcType=VARCHAR}, 
+      #{deleteText,jdbcType=VARCHAR}, #{deleteNumber,jdbcType=VARCHAR}, #{troneType,jdbcType=TINYINT}, 
+      #{sidCidOnly,jdbcType=VARCHAR}, #{helpline,jdbcType=VARCHAR}, #{spId,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{serviceName,jdbcType=VARCHAR}, #{divideRatio,jdbcType=DOUBLE}, 
+      #{isFreshPv,jdbcType=TINYINT}, #{weight,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.CfgSdkTrone" >
+    insert into cfg_sdk_trone
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="troneStrategyId != null" >
+        trone_strategy_id,
+      </if>
+      <if test="serviceCode != null" >
+        service_code,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="trone != null" >
+        trone,
+      </if>
+      <if test="command != null" >
+        command,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="confirmKeyword != null" >
+        confirm_keyword,
+      </if>
+      <if test="confirmCommand != null" >
+        confirm_command,
+      </if>
+      <if test="confirmTrone != null" >
+        confirm_trone,
+      </if>
+      <if test="findRndKeyword != null" >
+        find_rnd_keyword,
+      </if>
+      <if test="deleteText != null" >
+        delete_text,
+      </if>
+      <if test="deleteNumber != null" >
+        delete_number,
+      </if>
+      <if test="troneType != null" >
+        trone_type,
+      </if>
+      <if test="sidCidOnly != null" >
+        sid_cid_only,
+      </if>
+      <if test="helpline != null" >
+        helpline,
+      </if>
+      <if test="spId != null" >
+        sp_id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="serviceName != null" >
+        service_name,
+      </if>
+      <if test="divideRatio != null" >
+        divide_ratio,
+      </if>
+      <if test="isFreshPv != null" >
+        is_fresh_pv,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="troneStrategyId != null" >
+        #{troneStrategyId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceCode != null" >
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="trone != null" >
+        #{trone,jdbcType=VARCHAR},
+      </if>
+      <if test="command != null" >
+        #{command,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DOUBLE},
+      </if>
+      <if test="confirmKeyword != null" >
+        #{confirmKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmCommand != null" >
+        #{confirmCommand,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmTrone != null" >
+        #{confirmTrone,jdbcType=VARCHAR},
+      </if>
+      <if test="findRndKeyword != null" >
+        #{findRndKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteText != null" >
+        #{deleteText,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteNumber != null" >
+        #{deleteNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="troneType != null" >
+        #{troneType,jdbcType=TINYINT},
+      </if>
+      <if test="sidCidOnly != null" >
+        #{sidCidOnly,jdbcType=VARCHAR},
+      </if>
+      <if test="helpline != null" >
+        #{helpline,jdbcType=VARCHAR},
+      </if>
+      <if test="spId != null" >
+        #{spId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null" >
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="divideRatio != null" >
+        #{divideRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="isFreshPv != null" >
+        #{isFreshPv,jdbcType=TINYINT},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cfg_sdk_trone
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.troneStrategyId != null" >
+        trone_strategy_id = #{record.troneStrategyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceCode != null" >
+        service_code = #{record.serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trone != null" >
+        trone = #{record.trone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.command != null" >
+        command = #{record.command,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fee != null" >
+        fee = #{record.fee,jdbcType=DOUBLE},
+      </if>
+      <if test="record.confirmKeyword != null" >
+        confirm_keyword = #{record.confirmKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmCommand != null" >
+        confirm_command = #{record.confirmCommand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmTrone != null" >
+        confirm_trone = #{record.confirmTrone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.findRndKeyword != null" >
+        find_rnd_keyword = #{record.findRndKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteText != null" >
+        delete_text = #{record.deleteText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteNumber != null" >
+        delete_number = #{record.deleteNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.troneType != null" >
+        trone_type = #{record.troneType,jdbcType=TINYINT},
+      </if>
+      <if test="record.sidCidOnly != null" >
+        sid_cid_only = #{record.sidCidOnly,jdbcType=VARCHAR},
+      </if>
+      <if test="record.helpline != null" >
+        helpline = #{record.helpline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spId != null" >
+        sp_id = #{record.spId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceName != null" >
+        service_name = #{record.serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.divideRatio != null" >
+        divide_ratio = #{record.divideRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.isFreshPv != null" >
+        is_fresh_pv = #{record.isFreshPv,jdbcType=TINYINT},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cfg_sdk_trone
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      trone_strategy_id = #{record.troneStrategyId,jdbcType=INTEGER},
+      service_code = #{record.serviceCode,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      trone = #{record.trone,jdbcType=VARCHAR},
+      command = #{record.command,jdbcType=VARCHAR},
+      fee = #{record.fee,jdbcType=DOUBLE},
+      confirm_keyword = #{record.confirmKeyword,jdbcType=VARCHAR},
+      confirm_command = #{record.confirmCommand,jdbcType=VARCHAR},
+      confirm_trone = #{record.confirmTrone,jdbcType=VARCHAR},
+      find_rnd_keyword = #{record.findRndKeyword,jdbcType=VARCHAR},
+      delete_text = #{record.deleteText,jdbcType=VARCHAR},
+      delete_number = #{record.deleteNumber,jdbcType=VARCHAR},
+      trone_type = #{record.troneType,jdbcType=TINYINT},
+      sid_cid_only = #{record.sidCidOnly,jdbcType=VARCHAR},
+      helpline = #{record.helpline,jdbcType=VARCHAR},
+      sp_id = #{record.spId,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      service_name = #{record.serviceName,jdbcType=VARCHAR},
+      divide_ratio = #{record.divideRatio,jdbcType=DOUBLE},
+      is_fresh_pv = #{record.isFreshPv,jdbcType=TINYINT},
+      weight = #{record.weight,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.CfgSdkTrone" >
+    update cfg_sdk_trone
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="troneStrategyId != null" >
+        trone_strategy_id = #{troneStrategyId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceCode != null" >
+        service_code = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="trone != null" >
+        trone = #{trone,jdbcType=VARCHAR},
+      </if>
+      <if test="command != null" >
+        command = #{command,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DOUBLE},
+      </if>
+      <if test="confirmKeyword != null" >
+        confirm_keyword = #{confirmKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmCommand != null" >
+        confirm_command = #{confirmCommand,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmTrone != null" >
+        confirm_trone = #{confirmTrone,jdbcType=VARCHAR},
+      </if>
+      <if test="findRndKeyword != null" >
+        find_rnd_keyword = #{findRndKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteText != null" >
+        delete_text = #{deleteText,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteNumber != null" >
+        delete_number = #{deleteNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="troneType != null" >
+        trone_type = #{troneType,jdbcType=TINYINT},
+      </if>
+      <if test="sidCidOnly != null" >
+        sid_cid_only = #{sidCidOnly,jdbcType=VARCHAR},
+      </if>
+      <if test="helpline != null" >
+        helpline = #{helpline,jdbcType=VARCHAR},
+      </if>
+      <if test="spId != null" >
+        sp_id = #{spId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null" >
+        service_name = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="divideRatio != null" >
+        divide_ratio = #{divideRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="isFreshPv != null" >
+        is_fresh_pv = #{isFreshPv,jdbcType=TINYINT},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.CfgSdkTrone" >
+    update cfg_sdk_trone
+    set name = #{name,jdbcType=VARCHAR},
+      trone_strategy_id = #{troneStrategyId,jdbcType=INTEGER},
+      service_code = #{serviceCode,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      trone = #{trone,jdbcType=VARCHAR},
+      command = #{command,jdbcType=VARCHAR},
+      fee = #{fee,jdbcType=DOUBLE},
+      confirm_keyword = #{confirmKeyword,jdbcType=VARCHAR},
+      confirm_command = #{confirmCommand,jdbcType=VARCHAR},
+      confirm_trone = #{confirmTrone,jdbcType=VARCHAR},
+      find_rnd_keyword = #{findRndKeyword,jdbcType=VARCHAR},
+      delete_text = #{deleteText,jdbcType=VARCHAR},
+      delete_number = #{deleteNumber,jdbcType=VARCHAR},
+      trone_type = #{troneType,jdbcType=TINYINT},
+      sid_cid_only = #{sidCidOnly,jdbcType=VARCHAR},
+      helpline = #{helpline,jdbcType=VARCHAR},
+      sp_id = #{spId,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      service_name = #{serviceName,jdbcType=VARCHAR},
+      divide_ratio = #{divideRatio,jdbcType=DOUBLE},
+      is_fresh_pv = #{isFreshPv,jdbcType=TINYINT},
+      weight = #{weight,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <classPathEntry location="E:/sz5zWorkspace/zsyj-sdk-fee/zsyj-sdk-fee-statis/mysql-connector-java-5.1.22.jar" />
+  <context id="context1" >
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/sdkbusiness" userId="root" password="123456" />
+    <javaModelGenerator targetPackage="com.zsyj.entity" targetProject="zsyj-sdk-fee-statis" />
+    <sqlMapGenerator targetPackage="com.zsyj.mapping" targetProject="zsyj-sdk-fee-statis" />
+    <!-- 生成DAO的包名和位置-->
+    <javaClientGenerator targetPackage="com.zsyj.dao" targetProject="zsyj-sdk-fee-statis" type="XMLMAPPER" />
+    <table schema="sdkbusiness" tableName="smsconfiginfo" enableCountByExample="true" >
+    </table>
+  </context>
+</generatorConfiguration>

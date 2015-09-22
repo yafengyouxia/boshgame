@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.CfgSdkAppMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.CfgSdkApp" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="package_name" property="packageName" jdbcType="VARCHAR" />
+    <result column="cpid" property="cpid" jdbcType="INTEGER" />
+    <result column="secret_key" property="secretKey" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="logtime" property="logtime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="divide" property="divide" jdbcType="DOUBLE" />
+    <result column="umeng_key" property="umengKey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, appid, name, package_name, cpid, secret_key, status, logtime, type, divide, umeng_key
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.CfgSdkAppCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cfg_sdk_app
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cfg_sdk_app
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cfg_sdk_app
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zsyj.fee.entity.CfgSdkAppCondition" >
+    delete from cfg_sdk_app
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.CfgSdkApp" >
+    insert into cfg_sdk_app (id, appid, name, 
+      package_name, cpid, secret_key, 
+      status, logtime, type, 
+      divide, umeng_key)
+    values (#{id,jdbcType=INTEGER}, #{appid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{packageName,jdbcType=VARCHAR}, #{cpid,jdbcType=INTEGER}, #{secretKey,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{logtime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, 
+      #{divide,jdbcType=DOUBLE}, #{umengKey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.CfgSdkApp" >
+    insert into cfg_sdk_app
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="packageName != null" >
+        package_name,
+      </if>
+      <if test="cpid != null" >
+        cpid,
+      </if>
+      <if test="secretKey != null" >
+        secret_key,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="logtime != null" >
+        logtime,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="divide != null" >
+        divide,
+      </if>
+      <if test="umengKey != null" >
+        umeng_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="packageName != null" >
+        #{packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="cpid != null" >
+        #{cpid,jdbcType=INTEGER},
+      </if>
+      <if test="secretKey != null" >
+        #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="divide != null" >
+        #{divide,jdbcType=DOUBLE},
+      </if>
+      <if test="umengKey != null" >
+        #{umengKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zsyj.fee.entity.CfgSdkAppCondition" resultType="java.lang.Integer" >
+    select count(*) from cfg_sdk_app
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cfg_sdk_app
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.appid != null" >
+        appid = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.packageName != null" >
+        package_name = #{record.packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpid != null" >
+        cpid = #{record.cpid,jdbcType=INTEGER},
+      </if>
+      <if test="record.secretKey != null" >
+        secret_key = #{record.secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.logtime != null" >
+        logtime = #{record.logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.divide != null" >
+        divide = #{record.divide,jdbcType=DOUBLE},
+      </if>
+      <if test="record.umengKey != null" >
+        umeng_key = #{record.umengKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cfg_sdk_app
+    set id = #{record.id,jdbcType=INTEGER},
+      appid = #{record.appid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      package_name = #{record.packageName,jdbcType=VARCHAR},
+      cpid = #{record.cpid,jdbcType=INTEGER},
+      secret_key = #{record.secretKey,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      logtime = #{record.logtime,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=VARCHAR},
+      divide = #{record.divide,jdbcType=DOUBLE},
+      umeng_key = #{record.umengKey,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.CfgSdkApp" >
+    update cfg_sdk_app
+    <set >
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="packageName != null" >
+        package_name = #{packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="cpid != null" >
+        cpid = #{cpid,jdbcType=INTEGER},
+      </if>
+      <if test="secretKey != null" >
+        secret_key = #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="logtime != null" >
+        logtime = #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="divide != null" >
+        divide = #{divide,jdbcType=DOUBLE},
+      </if>
+      <if test="umengKey != null" >
+        umeng_key = #{umengKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.CfgSdkApp" >
+    update cfg_sdk_app
+    set appid = #{appid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      package_name = #{packageName,jdbcType=VARCHAR},
+      cpid = #{cpid,jdbcType=INTEGER},
+      secret_key = #{secretKey,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      logtime = #{logtime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      divide = #{divide,jdbcType=DOUBLE},
+      umeng_key = #{umengKey,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

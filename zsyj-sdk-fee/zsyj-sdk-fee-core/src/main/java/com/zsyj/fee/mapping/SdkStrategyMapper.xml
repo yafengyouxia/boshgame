@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.SdkStrategyMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.SdkStrategy" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="fee_limit_month" property="feeLimitMonth" jdbcType="INTEGER" />
+    <result column="fee_limit_day" property="feeLimitDay" jdbcType="INTEGER" />
+    <result column="confirm_dialog_type" property="confirmDialogType" jdbcType="TINYINT" />
+    <result column="result_dialog_type" property="resultDialogType" jdbcType="TINYINT" />
+    <result column="item_for_failresult" property="itemForFailresult" jdbcType="BIT" />
+    <result column="is_fresh_one" property="isFreshOne" jdbcType="TINYINT" />
+    <result column="fee_detail" property="feeDetail" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, code, fee_limit_month, fee_limit_day, confirm_dialog_type, result_dialog_type, 
+    item_for_failresult, is_fresh_one, fee_detail, addtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.SdkStrategyCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cfg_sdk_strategy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cfg_sdk_strategy
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cfg_sdk_strategy
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.SdkStrategy" >
+    insert into cfg_sdk_strategy (id, name, code, 
+      fee_limit_month, fee_limit_day, confirm_dialog_type, 
+      result_dialog_type, item_for_failresult, is_fresh_one, 
+      fee_detail, addtime)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{feeLimitMonth,jdbcType=INTEGER}, #{feeLimitDay,jdbcType=INTEGER}, #{confirmDialogType,jdbcType=TINYINT}, 
+      #{resultDialogType,jdbcType=TINYINT}, #{itemForFailresult,jdbcType=BIT}, #{isFreshOne,jdbcType=TINYINT}, 
+      #{feeDetail,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.SdkStrategy" >
+    insert into cfg_sdk_strategy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="feeLimitMonth != null" >
+        fee_limit_month,
+      </if>
+      <if test="feeLimitDay != null" >
+        fee_limit_day,
+      </if>
+      <if test="confirmDialogType != null" >
+        confirm_dialog_type,
+      </if>
+      <if test="resultDialogType != null" >
+        result_dialog_type,
+      </if>
+      <if test="itemForFailresult != null" >
+        item_for_failresult,
+      </if>
+      <if test="isFreshOne != null" >
+        is_fresh_one,
+      </if>
+      <if test="feeDetail != null" >
+        fee_detail,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="feeLimitMonth != null" >
+        #{feeLimitMonth,jdbcType=INTEGER},
+      </if>
+      <if test="feeLimitDay != null" >
+        #{feeLimitDay,jdbcType=INTEGER},
+      </if>
+      <if test="confirmDialogType != null" >
+        #{confirmDialogType,jdbcType=TINYINT},
+      </if>
+      <if test="resultDialogType != null" >
+        #{resultDialogType,jdbcType=TINYINT},
+      </if>
+      <if test="itemForFailresult != null" >
+        #{itemForFailresult,jdbcType=BIT},
+      </if>
+      <if test="isFreshOne != null" >
+        #{isFreshOne,jdbcType=TINYINT},
+      </if>
+      <if test="feeDetail != null" >
+        #{feeDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.SdkStrategy" >
+    update cfg_sdk_strategy
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="feeLimitMonth != null" >
+        fee_limit_month = #{feeLimitMonth,jdbcType=INTEGER},
+      </if>
+      <if test="feeLimitDay != null" >
+        fee_limit_day = #{feeLimitDay,jdbcType=INTEGER},
+      </if>
+      <if test="confirmDialogType != null" >
+        confirm_dialog_type = #{confirmDialogType,jdbcType=TINYINT},
+      </if>
+      <if test="resultDialogType != null" >
+        result_dialog_type = #{resultDialogType,jdbcType=TINYINT},
+      </if>
+      <if test="itemForFailresult != null" >
+        item_for_failresult = #{itemForFailresult,jdbcType=BIT},
+      </if>
+      <if test="isFreshOne != null" >
+        is_fresh_one = #{isFreshOne,jdbcType=TINYINT},
+      </if>
+      <if test="feeDetail != null" >
+        fee_detail = #{feeDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.SdkStrategy" >
+    update cfg_sdk_strategy
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      fee_limit_month = #{feeLimitMonth,jdbcType=INTEGER},
+      fee_limit_day = #{feeLimitDay,jdbcType=INTEGER},
+      confirm_dialog_type = #{confirmDialogType,jdbcType=TINYINT},
+      result_dialog_type = #{resultDialogType,jdbcType=TINYINT},
+      item_for_failresult = #{itemForFailresult,jdbcType=BIT},
+      is_fresh_one = #{isFreshOne,jdbcType=TINYINT},
+      fee_detail = #{feeDetail,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

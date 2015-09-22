@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.SmsconfigInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.SmsconfigInfo" >
+    <id column="sysID" property="sysid" jdbcType="INTEGER" />
+    <result column="configID" property="configid" jdbcType="INTEGER" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="command" property="command" jdbcType="VARCHAR" />
+    <result column="trone" property="trone" jdbcType="VARCHAR" />
+    <result column="confirmCommand" property="confirmcommand" jdbcType="VARCHAR" />
+    <result column="confirmTrone" property="confirmtrone" jdbcType="VARCHAR" />
+    <result column="fee" property="fee" jdbcType="VARCHAR" />
+    <result column="serviceCode" property="servicecode" jdbcType="VARCHAR" />
+    <result column="configName" property="configname" jdbcType="VARCHAR" />
+    <result column="deleteInfo" property="deleteinfo" jdbcType="VARCHAR" />
+    <result column="deleteNo" property="deleteno" jdbcType="VARCHAR" />
+    <result column="tronetype" property="tronetype" jdbcType="TINYINT" />
+    <result column="belong" property="belong" jdbcType="VARCHAR" />
+    <result column="confirm_keyword" property="confirmKeyword" jdbcType="VARCHAR" />
+    <result column="find_rnd_keyword" property="findRndKeyword" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="service_name" property="serviceName" jdbcType="VARCHAR" />
+    <result column="first_mt_keyword" property="firstMtKeyword" jdbcType="VARCHAR" />
+    <result column="sp_cid" property="spCid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sysID, configID, area, command, trone, confirmCommand, confirmTrone, fee, serviceCode, 
+    configName, deleteInfo, deleteNo, tronetype, belong, confirm_keyword, find_rnd_keyword, 
+    company_name, service_name, first_mt_keyword, sp_cid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.SmsconfigInfoCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from smsconfiginfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from smsconfiginfo
+    where sysID = #{sysid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from smsconfiginfo
+    where sysID = #{sysid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zsyj.fee.entity.SmsconfigInfoCondition" >
+    delete from smsconfiginfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.SmsconfigInfo" >
+    insert into smsconfiginfo (sysID, configID, area, 
+      command, trone, confirmCommand, 
+      confirmTrone, fee, serviceCode, 
+      configName, deleteInfo, deleteNo, 
+      tronetype, belong, confirm_keyword, 
+      find_rnd_keyword, company_name, service_name, 
+      first_mt_keyword, sp_cid)
+    values (#{sysid,jdbcType=INTEGER}, #{configid,jdbcType=INTEGER}, #{area,jdbcType=VARCHAR}, 
+      #{command,jdbcType=VARCHAR}, #{trone,jdbcType=VARCHAR}, #{confirmcommand,jdbcType=VARCHAR}, 
+      #{confirmtrone,jdbcType=VARCHAR}, #{fee,jdbcType=VARCHAR}, #{servicecode,jdbcType=VARCHAR}, 
+      #{configname,jdbcType=VARCHAR}, #{deleteinfo,jdbcType=VARCHAR}, #{deleteno,jdbcType=VARCHAR}, 
+      #{tronetype,jdbcType=TINYINT}, #{belong,jdbcType=VARCHAR}, #{confirmKeyword,jdbcType=VARCHAR}, 
+      #{findRndKeyword,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{serviceName,jdbcType=VARCHAR}, 
+      #{firstMtKeyword,jdbcType=VARCHAR}, #{spCid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.SmsconfigInfo" >
+    insert into smsconfiginfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysid != null" >
+        sysID,
+      </if>
+      <if test="configid != null" >
+        configID,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="command != null" >
+        command,
+      </if>
+      <if test="trone != null" >
+        trone,
+      </if>
+      <if test="confirmcommand != null" >
+        confirmCommand,
+      </if>
+      <if test="confirmtrone != null" >
+        confirmTrone,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="servicecode != null" >
+        serviceCode,
+      </if>
+      <if test="configname != null" >
+        configName,
+      </if>
+      <if test="deleteinfo != null" >
+        deleteInfo,
+      </if>
+      <if test="deleteno != null" >
+        deleteNo,
+      </if>
+      <if test="tronetype != null" >
+        tronetype,
+      </if>
+      <if test="belong != null" >
+        belong,
+      </if>
+      <if test="confirmKeyword != null" >
+        confirm_keyword,
+      </if>
+      <if test="findRndKeyword != null" >
+        find_rnd_keyword,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="serviceName != null" >
+        service_name,
+      </if>
+      <if test="firstMtKeyword != null" >
+        first_mt_keyword,
+      </if>
+      <if test="spCid != null" >
+        sp_cid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysid != null" >
+        #{sysid,jdbcType=INTEGER},
+      </if>
+      <if test="configid != null" >
+        #{configid,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="command != null" >
+        #{command,jdbcType=VARCHAR},
+      </if>
+      <if test="trone != null" >
+        #{trone,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmcommand != null" >
+        #{confirmcommand,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmtrone != null" >
+        #{confirmtrone,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=VARCHAR},
+      </if>
+      <if test="servicecode != null" >
+        #{servicecode,jdbcType=VARCHAR},
+      </if>
+      <if test="configname != null" >
+        #{configname,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteinfo != null" >
+        #{deleteinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteno != null" >
+        #{deleteno,jdbcType=VARCHAR},
+      </if>
+      <if test="tronetype != null" >
+        #{tronetype,jdbcType=TINYINT},
+      </if>
+      <if test="belong != null" >
+        #{belong,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmKeyword != null" >
+        #{confirmKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="findRndKeyword != null" >
+        #{findRndKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null" >
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMtKeyword != null" >
+        #{firstMtKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="spCid != null" >
+        #{spCid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zsyj.fee.entity.SmsconfigInfoCondition" resultType="java.lang.Integer" >
+    select count(*) from smsconfiginfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update smsconfiginfo
+    <set >
+      <if test="record.sysid != null" >
+        sysID = #{record.sysid,jdbcType=INTEGER},
+      </if>
+      <if test="record.configid != null" >
+        configID = #{record.configid,jdbcType=INTEGER},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.command != null" >
+        command = #{record.command,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trone != null" >
+        trone = #{record.trone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmcommand != null" >
+        confirmCommand = #{record.confirmcommand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmtrone != null" >
+        confirmTrone = #{record.confirmtrone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fee != null" >
+        fee = #{record.fee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servicecode != null" >
+        serviceCode = #{record.servicecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configname != null" >
+        configName = #{record.configname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteinfo != null" >
+        deleteInfo = #{record.deleteinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteno != null" >
+        deleteNo = #{record.deleteno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tronetype != null" >
+        tronetype = #{record.tronetype,jdbcType=TINYINT},
+      </if>
+      <if test="record.belong != null" >
+        belong = #{record.belong,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmKeyword != null" >
+        confirm_keyword = #{record.confirmKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.findRndKeyword != null" >
+        find_rnd_keyword = #{record.findRndKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceName != null" >
+        service_name = #{record.serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstMtKeyword != null" >
+        first_mt_keyword = #{record.firstMtKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spCid != null" >
+        sp_cid = #{record.spCid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update smsconfiginfo
+    set sysID = #{record.sysid,jdbcType=INTEGER},
+      configID = #{record.configid,jdbcType=INTEGER},
+      area = #{record.area,jdbcType=VARCHAR},
+      command = #{record.command,jdbcType=VARCHAR},
+      trone = #{record.trone,jdbcType=VARCHAR},
+      confirmCommand = #{record.confirmcommand,jdbcType=VARCHAR},
+      confirmTrone = #{record.confirmtrone,jdbcType=VARCHAR},
+      fee = #{record.fee,jdbcType=VARCHAR},
+      serviceCode = #{record.servicecode,jdbcType=VARCHAR},
+      configName = #{record.configname,jdbcType=VARCHAR},
+      deleteInfo = #{record.deleteinfo,jdbcType=VARCHAR},
+      deleteNo = #{record.deleteno,jdbcType=VARCHAR},
+      tronetype = #{record.tronetype,jdbcType=TINYINT},
+      belong = #{record.belong,jdbcType=VARCHAR},
+      confirm_keyword = #{record.confirmKeyword,jdbcType=VARCHAR},
+      find_rnd_keyword = #{record.findRndKeyword,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      service_name = #{record.serviceName,jdbcType=VARCHAR},
+      first_mt_keyword = #{record.firstMtKeyword,jdbcType=VARCHAR},
+      sp_cid = #{record.spCid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.SmsconfigInfo" >
+    update smsconfiginfo
+    <set >
+      <if test="configid != null" >
+        configID = #{configid,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="command != null" >
+        command = #{command,jdbcType=VARCHAR},
+      </if>
+      <if test="trone != null" >
+        trone = #{trone,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmcommand != null" >
+        confirmCommand = #{confirmcommand,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmtrone != null" >
+        confirmTrone = #{confirmtrone,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=VARCHAR},
+      </if>
+      <if test="servicecode != null" >
+        serviceCode = #{servicecode,jdbcType=VARCHAR},
+      </if>
+      <if test="configname != null" >
+        configName = #{configname,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteinfo != null" >
+        deleteInfo = #{deleteinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteno != null" >
+        deleteNo = #{deleteno,jdbcType=VARCHAR},
+      </if>
+      <if test="tronetype != null" >
+        tronetype = #{tronetype,jdbcType=TINYINT},
+      </if>
+      <if test="belong != null" >
+        belong = #{belong,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmKeyword != null" >
+        confirm_keyword = #{confirmKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="findRndKeyword != null" >
+        find_rnd_keyword = #{findRndKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null" >
+        service_name = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMtKeyword != null" >
+        first_mt_keyword = #{firstMtKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="spCid != null" >
+        sp_cid = #{spCid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sysID = #{sysid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.SmsconfigInfo" >
+    update smsconfiginfo
+    set configID = #{configid,jdbcType=INTEGER},
+      area = #{area,jdbcType=VARCHAR},
+      command = #{command,jdbcType=VARCHAR},
+      trone = #{trone,jdbcType=VARCHAR},
+      confirmCommand = #{confirmcommand,jdbcType=VARCHAR},
+      confirmTrone = #{confirmtrone,jdbcType=VARCHAR},
+      fee = #{fee,jdbcType=VARCHAR},
+      serviceCode = #{servicecode,jdbcType=VARCHAR},
+      configName = #{configname,jdbcType=VARCHAR},
+      deleteInfo = #{deleteinfo,jdbcType=VARCHAR},
+      deleteNo = #{deleteno,jdbcType=VARCHAR},
+      tronetype = #{tronetype,jdbcType=TINYINT},
+      belong = #{belong,jdbcType=VARCHAR},
+      confirm_keyword = #{confirmKeyword,jdbcType=VARCHAR},
+      find_rnd_keyword = #{findRndKeyword,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      service_name = #{serviceName,jdbcType=VARCHAR},
+      first_mt_keyword = #{firstMtKeyword,jdbcType=VARCHAR},
+      sp_cid = #{spCid,jdbcType=INTEGER}
+    where sysID = #{sysid,jdbcType=INTEGER}
+  </update>
+</mapper>

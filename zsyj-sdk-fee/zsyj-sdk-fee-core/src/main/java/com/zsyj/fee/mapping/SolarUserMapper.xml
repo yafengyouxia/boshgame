@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.SolarUserMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.SolarUser" >
+    <id column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="ROLE_CODE" property="roleCode" jdbcType="VARCHAR" />
+    <result column="INFO_DESC" property="infoDesc" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="SYNCH_ADDRESS" property="synchAddress" jdbcType="VARCHAR" />
+    <result column="SMS_TYPE" property="smsType" jdbcType="VARCHAR" />
+    <result column="feeCaseID" property="feecaseid" jdbcType="VARCHAR" />
+    <result column="feeDmmenuID" property="feedmmenuid" jdbcType="VARCHAR" />
+    <result column="is_login" property="isLogin" jdbcType="INTEGER" />
+    <result column="is_divide" property="isDivide" jdbcType="INTEGER" />
+    <result column="n_area_id" property="nAreaId" jdbcType="INTEGER" />
+    <result column="is_mobile_sale" property="isMobileSale" jdbcType="INTEGER" />
+    <result column="is_bizsys_enabled" property="isBizsysEnabled" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_ID, USER_NAME, PASSWORD, ROLE_CODE, INFO_DESC, STATUS, CREATE_DATE, IP, SYNCH_ADDRESS, 
+    SMS_TYPE, feeCaseID, feeDmmenuID, is_login, is_divide, n_area_id, is_mobile_sale, 
+    is_bizsys_enabled
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.SolarUserCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from solar_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from solar_user
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from solar_user
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zsyj.fee.entity.SolarUserCondition" >
+    delete from solar_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.SolarUser" >
+    insert into solar_user (USER_ID, USER_NAME, PASSWORD, 
+      ROLE_CODE, INFO_DESC, STATUS, 
+      CREATE_DATE, IP, SYNCH_ADDRESS, 
+      SMS_TYPE, feeCaseID, feeDmmenuID, 
+      is_login, is_divide, n_area_id, 
+      is_mobile_sale, is_bizsys_enabled)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{roleCode,jdbcType=VARCHAR}, #{infoDesc,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{ip,jdbcType=VARCHAR}, #{synchAddress,jdbcType=VARCHAR}, 
+      #{smsType,jdbcType=VARCHAR}, #{feecaseid,jdbcType=VARCHAR}, #{feedmmenuid,jdbcType=VARCHAR}, 
+      #{isLogin,jdbcType=INTEGER}, #{isDivide,jdbcType=INTEGER}, #{nAreaId,jdbcType=INTEGER}, 
+      #{isMobileSale,jdbcType=INTEGER}, #{isBizsysEnabled,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.SolarUser" >
+    insert into solar_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="roleCode != null" >
+        ROLE_CODE,
+      </if>
+      <if test="infoDesc != null" >
+        INFO_DESC,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="synchAddress != null" >
+        SYNCH_ADDRESS,
+      </if>
+      <if test="smsType != null" >
+        SMS_TYPE,
+      </if>
+      <if test="feecaseid != null" >
+        feeCaseID,
+      </if>
+      <if test="feedmmenuid != null" >
+        feeDmmenuID,
+      </if>
+      <if test="isLogin != null" >
+        is_login,
+      </if>
+      <if test="isDivide != null" >
+        is_divide,
+      </if>
+      <if test="nAreaId != null" >
+        n_area_id,
+      </if>
+      <if test="isMobileSale != null" >
+        is_mobile_sale,
+      </if>
+      <if test="isBizsysEnabled != null" >
+        is_bizsys_enabled,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null" >
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="infoDesc != null" >
+        #{infoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="synchAddress != null" >
+        #{synchAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="smsType != null" >
+        #{smsType,jdbcType=VARCHAR},
+      </if>
+      <if test="feecaseid != null" >
+        #{feecaseid,jdbcType=VARCHAR},
+      </if>
+      <if test="feedmmenuid != null" >
+        #{feedmmenuid,jdbcType=VARCHAR},
+      </if>
+      <if test="isLogin != null" >
+        #{isLogin,jdbcType=INTEGER},
+      </if>
+      <if test="isDivide != null" >
+        #{isDivide,jdbcType=INTEGER},
+      </if>
+      <if test="nAreaId != null" >
+        #{nAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="isMobileSale != null" >
+        #{isMobileSale,jdbcType=INTEGER},
+      </if>
+      <if test="isBizsysEnabled != null" >
+        #{isBizsysEnabled,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zsyj.fee.entity.SolarUserCondition" resultType="java.lang.Integer" >
+    select count(*) from solar_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update solar_user
+    <set >
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleCode != null" >
+        ROLE_CODE = #{record.roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infoDesc != null" >
+        INFO_DESC = #{record.infoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ip != null" >
+        IP = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.synchAddress != null" >
+        SYNCH_ADDRESS = #{record.synchAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsType != null" >
+        SMS_TYPE = #{record.smsType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feecaseid != null" >
+        feeCaseID = #{record.feecaseid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedmmenuid != null" >
+        feeDmmenuID = #{record.feedmmenuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isLogin != null" >
+        is_login = #{record.isLogin,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDivide != null" >
+        is_divide = #{record.isDivide,jdbcType=INTEGER},
+      </if>
+      <if test="record.nAreaId != null" >
+        n_area_id = #{record.nAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isMobileSale != null" >
+        is_mobile_sale = #{record.isMobileSale,jdbcType=INTEGER},
+      </if>
+      <if test="record.isBizsysEnabled != null" >
+        is_bizsys_enabled = #{record.isBizsysEnabled,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update solar_user
+    set USER_ID = #{record.userId,jdbcType=INTEGER},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      PASSWORD = #{record.password,jdbcType=VARCHAR},
+      ROLE_CODE = #{record.roleCode,jdbcType=VARCHAR},
+      INFO_DESC = #{record.infoDesc,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      IP = #{record.ip,jdbcType=VARCHAR},
+      SYNCH_ADDRESS = #{record.synchAddress,jdbcType=VARCHAR},
+      SMS_TYPE = #{record.smsType,jdbcType=VARCHAR},
+      feeCaseID = #{record.feecaseid,jdbcType=VARCHAR},
+      feeDmmenuID = #{record.feedmmenuid,jdbcType=VARCHAR},
+      is_login = #{record.isLogin,jdbcType=INTEGER},
+      is_divide = #{record.isDivide,jdbcType=INTEGER},
+      n_area_id = #{record.nAreaId,jdbcType=INTEGER},
+      is_mobile_sale = #{record.isMobileSale,jdbcType=INTEGER},
+      is_bizsys_enabled = #{record.isBizsysEnabled,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.SolarUser" >
+    update solar_user
+    <set >
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null" >
+        ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="infoDesc != null" >
+        INFO_DESC = #{infoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null" >
+        IP = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="synchAddress != null" >
+        SYNCH_ADDRESS = #{synchAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="smsType != null" >
+        SMS_TYPE = #{smsType,jdbcType=VARCHAR},
+      </if>
+      <if test="feecaseid != null" >
+        feeCaseID = #{feecaseid,jdbcType=VARCHAR},
+      </if>
+      <if test="feedmmenuid != null" >
+        feeDmmenuID = #{feedmmenuid,jdbcType=VARCHAR},
+      </if>
+      <if test="isLogin != null" >
+        is_login = #{isLogin,jdbcType=INTEGER},
+      </if>
+      <if test="isDivide != null" >
+        is_divide = #{isDivide,jdbcType=INTEGER},
+      </if>
+      <if test="nAreaId != null" >
+        n_area_id = #{nAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="isMobileSale != null" >
+        is_mobile_sale = #{isMobileSale,jdbcType=INTEGER},
+      </if>
+      <if test="isBizsysEnabled != null" >
+        is_bizsys_enabled = #{isBizsysEnabled,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.SolarUser" >
+    update solar_user
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      INFO_DESC = #{infoDesc,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      IP = #{ip,jdbcType=VARCHAR},
+      SYNCH_ADDRESS = #{synchAddress,jdbcType=VARCHAR},
+      SMS_TYPE = #{smsType,jdbcType=VARCHAR},
+      feeCaseID = #{feecaseid,jdbcType=VARCHAR},
+      feeDmmenuID = #{feedmmenuid,jdbcType=VARCHAR},
+      is_login = #{isLogin,jdbcType=INTEGER},
+      is_divide = #{isDivide,jdbcType=INTEGER},
+      n_area_id = #{nAreaId,jdbcType=INTEGER},
+      is_mobile_sale = #{isMobileSale,jdbcType=INTEGER},
+      is_bizsys_enabled = #{isBizsysEnabled,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

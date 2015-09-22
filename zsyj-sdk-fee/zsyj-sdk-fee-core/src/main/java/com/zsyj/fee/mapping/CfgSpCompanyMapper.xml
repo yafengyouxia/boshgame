@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.CfgSpCompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.CfgSpCompany" >
+    <id column="sp_sid" property="spSid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="logtime" property="logtime" jdbcType="TIMESTAMP" />
+    <result column="fullname" property="fullname" jdbcType="VARCHAR" />
+    <result column="limit_day" property="limitDay" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="technology" property="technology" jdbcType="VARCHAR" />
+    <result column="businessman" property="businessman" jdbcType="VARCHAR" />
+    <result column="tech_contact" property="techContact" jdbcType="VARCHAR" />
+    <result column="master_id" property="masterId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sp_sid, title, logtime, fullname, limit_day, address, tel, technology, businessman, 
+    tech_contact, master_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.CfgSpCompanyCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cfg_sp_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cfg_sp_company
+    where sp_sid = #{spSid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cfg_sp_company
+    where sp_sid = #{spSid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zsyj.fee.entity.CfgSpCompanyCondition" >
+    delete from cfg_sp_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.CfgSpCompany" >
+    insert into cfg_sp_company (sp_sid, title, logtime, 
+      fullname, limit_day, address, 
+      tel, technology, businessman, 
+      tech_contact, master_id)
+    values (#{spSid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{logtime,jdbcType=TIMESTAMP}, 
+      #{fullname,jdbcType=VARCHAR}, #{limitDay,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{technology,jdbcType=VARCHAR}, #{businessman,jdbcType=VARCHAR}, 
+      #{techContact,jdbcType=VARCHAR}, #{masterId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.CfgSpCompany" >
+    insert into cfg_sp_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="spSid != null" >
+        sp_sid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="logtime != null" >
+        logtime,
+      </if>
+      <if test="fullname != null" >
+        fullname,
+      </if>
+      <if test="limitDay != null" >
+        limit_day,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="technology != null" >
+        technology,
+      </if>
+      <if test="businessman != null" >
+        businessman,
+      </if>
+      <if test="techContact != null" >
+        tech_contact,
+      </if>
+      <if test="masterId != null" >
+        master_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="spSid != null" >
+        #{spSid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fullname != null" >
+        #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="limitDay != null" >
+        #{limitDay,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="technology != null" >
+        #{technology,jdbcType=VARCHAR},
+      </if>
+      <if test="businessman != null" >
+        #{businessman,jdbcType=VARCHAR},
+      </if>
+      <if test="techContact != null" >
+        #{techContact,jdbcType=VARCHAR},
+      </if>
+      <if test="masterId != null" >
+        #{masterId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zsyj.fee.entity.CfgSpCompanyCondition" resultType="java.lang.Integer" >
+    select count(*) from cfg_sp_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cfg_sp_company
+    <set >
+      <if test="record.spSid != null" >
+        sp_sid = #{record.spSid,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null" >
+        logtime = #{record.logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fullname != null" >
+        fullname = #{record.fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitDay != null" >
+        limit_day = #{record.limitDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technology != null" >
+        technology = #{record.technology,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessman != null" >
+        businessman = #{record.businessman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.techContact != null" >
+        tech_contact = #{record.techContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterId != null" >
+        master_id = #{record.masterId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cfg_sp_company
+    set sp_sid = #{record.spSid,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      logtime = #{record.logtime,jdbcType=TIMESTAMP},
+      fullname = #{record.fullname,jdbcType=VARCHAR},
+      limit_day = #{record.limitDay,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      technology = #{record.technology,jdbcType=VARCHAR},
+      businessman = #{record.businessman,jdbcType=VARCHAR},
+      tech_contact = #{record.techContact,jdbcType=VARCHAR},
+      master_id = #{record.masterId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.CfgSpCompany" >
+    update cfg_sp_company
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null" >
+        logtime = #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fullname != null" >
+        fullname = #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="limitDay != null" >
+        limit_day = #{limitDay,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="technology != null" >
+        technology = #{technology,jdbcType=VARCHAR},
+      </if>
+      <if test="businessman != null" >
+        businessman = #{businessman,jdbcType=VARCHAR},
+      </if>
+      <if test="techContact != null" >
+        tech_contact = #{techContact,jdbcType=VARCHAR},
+      </if>
+      <if test="masterId != null" >
+        master_id = #{masterId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sp_sid = #{spSid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.CfgSpCompany" >
+    update cfg_sp_company
+    set title = #{title,jdbcType=VARCHAR},
+      logtime = #{logtime,jdbcType=TIMESTAMP},
+      fullname = #{fullname,jdbcType=VARCHAR},
+      limit_day = #{limitDay,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      technology = #{technology,jdbcType=VARCHAR},
+      businessman = #{businessman,jdbcType=VARCHAR},
+      tech_contact = #{techContact,jdbcType=VARCHAR},
+      master_id = #{masterId,jdbcType=VARCHAR}
+    where sp_sid = #{spSid,jdbcType=INTEGER}
+  </update>
+</mapper>

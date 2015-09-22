@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <classPathEntry location="E:/sz5zWorkspace/zsyj-sdk-fee/zsyj-sdk-fee-statis/mysql-connector-java-5.1.22.jar" />
+  <context id="context1" >
+  	<!-- 此处是将Example改名为Criteria 当然 想改成什么都行~  -->
+    <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">  
+        <property name="searchString" value="Example$" />  
+        <property name="replaceString" value="Condition" />
+    </plugin>
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />  
+    <plugin type="org.mybatis.generator.plugins.MapperConfigPlugin">
+        <property name="fileName" value="GeneratedMapperConfig.xml" />  
+        <property name="targetPackage" value="com.cy.mybatis.mbg.util" />  
+        <property name="targetProject" value="zsyj-sdk-fee-core" />  
+    </plugin>
+  	<commentGenerator>
+	        <property name="suppressAllComments" value="true" />
+	</commentGenerator>
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/sdkbusiness" userId="root" password="123456" />
+    <javaModelGenerator targetPackage="com.zsyj.fee.entity" targetProject="zsyj-sdk-fee-core" />
+    <sqlMapGenerator targetPackage="com.zsyj.fee.mapping" targetProject="zsyj-sdk-fee-core" />
+    <!-- 生成DAO的包名和位置-->
+    <javaClientGenerator targetPackage="com.zsyj.fee.dao" targetProject="zsyj-sdk-fee-core" type="XMLMAPPER" />
+
+	<table schema="sdkbusiness" tableName="cfg_sdk_trone_strategy" domainObjectName="SdkTroneStrategy" />    
+    <!--
+    <table schema="sdkbusiness" tableName="solar_agent" domainObjectName="SolarAgent" 
+    	   enableCountByExample="true" enableUpdateByExample="true"  enableDeleteByExample="true" 
+    	   selectByExampleQueryId="true" >
+	</table>
+    <table schema="sdkbusiness" tableName="advance_config" domainObjectName="AdvanceConfig" />
+    <table schema="sdkbusiness" tableName="smsconfiginfo" domainObjectName="SmsconfigInfo" />
+    <table schema="sdkbusiness" tableName="cfg_sdk_trone" domainObjectName="CfgSdkTrone" 
+	   enableCountByExample="false" enableUpdateByExample="true"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="false" /> 
+	<table schema="sdkbusiness" tableName="cfg_sdk_trone_strategy" domainObjectName="CfgSdkTroneStrategy" 
+	   enableCountByExample="false" enableUpdateByExample="true"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="false" />
+    <table schema="sdkbusiness" tableName="sdk_unknow_area" domainObjectName="SdkUnknowArea" />
+    <table schema="sdkbusiness" tableName="cfg_limit_servicecode" domainObjectName="LimitServicecode" />
+    <table schema="sdkbusiness" tableName="users" domainObjectName="User"
+	   enableCountByExample="false" enableUpdateByExample="true"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="true" />
+    <table schema="sdkbusiness" tableName="cfg_sdk_accesslog" domainObjectName="SdkAccesslog" 
+	   enableCountByExample="false" enableUpdateByExample="false"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="false" />
+    <table schema="sdkbusiness" tableName="cfg_sdk_strategy" domainObjectName="SdkStrategy"
+	   enableCountByExample="false" enableUpdateByExample="false"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="false" />
+	<table schema="sdkbusiness" tableName="cfg_sdk_channel_strategy" domainObjectName="SdkChannelStrategy"
+	   enableCountByExample="false" enableUpdateByExample="false"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="false" />
+    <table schema="sdkbusiness" tableName="solar_charge" domainObjectName="SolarCharge"
+	   enableCountByExample="true" enableUpdateByExample="true"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="true" />
+    <table schema="sdkbusiness" tableName="sdk_order_log" domainObjectName="SdkOrderLog" 
+	   enableCountByExample="true" enableUpdateByExample="true"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="true" />
+    <table schema="sdkbusiness" tableName="solar_agent" domainObjectName="SolarAgent" />
+    <table schema="sdkbusiness" tableName="solar_monitor" domainObjectName="SolarMonitor" />
+    <table schema="sdkbusiness" tableName="cfg_sdk_accesslog" domainObjectName="CfgSdkAccesslog" 
+	   enableCountByExample="false" enableUpdateByExample="true"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="false" />
+    <table schema="sdkbusiness" tableName="users" domainObjectName="User"
+	   enableCountByExample="false" enableUpdateByExample="true"  enableDeleteByExample="false" 
+	   selectByExampleQueryId="true" />
+    <table schema="sdkbusiness" tableName="cfg_area" domainObjectName="CfgArea" />
+    <table schema="sdkbusiness" tableName="cfg_city" domainObjectName="CfgCity" />
+    <table schema="sdkbusiness" tableName="cfg_group" domainObjectName="CfgGroup" />
+    <table schema="sdkbusiness" tableName="cfg_group_sub" domainObjectName="CfgGroupSub" />
+    <table schema="sdkbusiness" tableName="cfg_ivrs" domainObjectName="CfgIvrs" />
+    <table schema="sdkbusiness" tableName="cfg_limit_servicecode" domainObjectName="CfgLimitServicecode" />
+    <table schema="sdkbusiness" tableName="cfg_limit_sid_cid" domainObjectName="CfgLimitSidSid" />
+    <table schema="sdkbusiness" tableName="cfg_produce" domainObjectName="CfgRole" />
+    <table schema="sdkbusiness" tableName="cfg_role_black" domainObjectName="CfgRoleBlack" />
+    <table schema="sdkbusiness" tableName="cfg_sdk_app" domainObjectName="CfgSdkApp" />
+    <table schema="sdkbusiness" tableName="cfg_sdk_cp" domainObjectName="cfgSdkCp" />
+    <table schema="sdkbusiness" tableName="cfg_smscenter" domainObjectName="CfgSmscenter" />
+    <table schema="sdkbusiness" tableName="cfg_sub" domainObjectName="CfgSub" />
+    <table schema="sdkbusiness" tableName="cfg_telcode" domainObjectName="CfgTelcode" />
+    <table schema="sdkbusiness" tableName="ip_infos" domainObjectName="IpInfos" />
+    <table schema="sdkbusiness" tableName="mobilearea" domainObjectName="Mobilearea" />
+    <table schema="sdkbusiness" tableName="solar_user" domainObjectName="SolarUser" />
+    <table schema="sdkbusiness" tableName="stat_status_info" domainObjectName="StatStatusInfo" />
+    <table schema="sdkbusiness" tableName="users" domainObjectName="users"
+    	   enableCountByExample="false" enableUpdateByExample="true"  enableDeleteByExample="false" 
+    	   selectByExampleQueryId="true" />
+    -->
+  </context>
+</generatorConfiguration>

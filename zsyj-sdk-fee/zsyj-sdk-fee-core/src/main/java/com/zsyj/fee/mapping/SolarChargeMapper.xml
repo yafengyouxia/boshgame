@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.SolarChargeMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.SolarCharge" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_sid" property="userSid" jdbcType="VARCHAR" />
+    <result column="user_cid" property="userCid" jdbcType="VARCHAR" />
+    <result column="sale_id" property="saleId" jdbcType="INTEGER" />
+    <result column="imsi" property="imsi" jdbcType="VARCHAR" />
+    <result column="cp_id" property="cpId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="trone_type" property="troneType" jdbcType="TINYINT" />
+    <result column="used_cash" property="usedCash" jdbcType="DOUBLE" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="link_id" property="linkId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="service_code" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="trone" property="trone" jdbcType="VARCHAR" />
+    <result column="mo" property="mo" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="spid" property="spid" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="TINYINT" />
+    <result column="disconnect_time" property="disconnectTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="SpData" type="com.zsyj.fee.vo.SpData" >
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="spId" property="spId" jdbcType="INTEGER" />
+    <result column="serviceCode" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="successMoney" property="successMoney" jdbcType="DOUBLE" />
+    <result column="successNum" property="successNum" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_sid, user_cid, sale_id, imsi, cp_id, app_id, order_id, trone_type, used_cash, 
+    mobile, link_id, status, service_code, trone, mo, area, city, spid, operator, disconnect_time
+  </sql>
+  <select id="selectServiceCodeData" resultMap="SpData" parameterType="com.zsyj.fee.entity.SolarChargeCondition">
+      select DATE_FORMAT(disconnect_time,'%Y %m %d') time,service_code serviceCode,SUM(case when status=1 then 1 else 0 end) successNum,SUM(case when status=1 then used_cash else 0 end) successMoney
+		from ${tableName}
+	 <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>	 
+		GROUP BY service_code, DATE_FORMAT(disconnect_time,'%Y %m %d') ORDER BY disconnect_time 
+  </select>
+  <select id="selectSpData" resultMap="SpData" parameterType="com.zsyj.fee.entity.SolarChargeCondition">
+    select DATE_FORMAT(disconnect_time,'%Y %m %d') time,spid spId,
+    		SUM(case when status=1 then 1 else 0 end) successNum,
+    		SUM(case when status=1 then used_cash else 0 end) successMoney
+		from ${tableName}
+	<if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>	 
+	GROUP BY spid, DATE_FORMAT(disconnect_time,'%Y %m %d') ORDER BY disconnect_time 
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.SolarChargeCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ${tableName}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ${tableName}
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  ${tableName}
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.SolarCharge" >
+    insert ignore into ${tableName} ( user_sid, user_cid, 
+      sale_id, imsi, cp_id, 
+      app_id, order_id, trone_type, 
+      used_cash, mobile, link_id, 
+      status, service_code, trone, 
+      mo, area, city, spid, 
+      operator, disconnect_time)
+    values (  #{userSid,jdbcType=VARCHAR}, #{userCid,jdbcType=VARCHAR}, 
+      #{saleId,jdbcType=INTEGER}, #{imsi,jdbcType=VARCHAR}, #{cpId,jdbcType=INTEGER}, 
+      #{appId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{troneType,jdbcType=TINYINT}, 
+      #{usedCash,jdbcType=DOUBLE}, #{mobile,jdbcType=VARCHAR}, #{linkId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{serviceCode,jdbcType=VARCHAR}, #{trone,jdbcType=VARCHAR}, 
+      #{mo,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{spid,jdbcType=INTEGER}, 
+      #{operator,jdbcType=TINYINT}, #{disconnectTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.SolarCharge" >
+    insert ignore into ${tableName}
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userSid != null" >
+        user_sid,
+      </if>
+      <if test="userCid != null" >
+        user_cid,
+      </if>
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="imsi != null" >
+        imsi,
+      </if>
+      <if test="cpId != null" >
+        cp_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="troneType != null" >
+        trone_type,
+      </if>
+      <if test="usedCash != null" >
+        used_cash,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="linkId != null" >
+        link_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="serviceCode != null" >
+        service_code,
+      </if>
+      <if test="trone != null" >
+        trone,
+      </if>
+      <if test="mo != null" >
+        mo,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="spid != null" >
+        spid,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="disconnectTime != null" >
+        disconnect_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userSid != null" >
+        #{userSid,jdbcType=VARCHAR},
+      </if>
+      <if test="userCid != null" >
+        #{userCid,jdbcType=VARCHAR},
+      </if>
+      <if test="saleId != null" >
+        #{saleId,jdbcType=INTEGER},
+      </if>
+      <if test="imsi != null" >
+        #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="cpId != null" >
+        #{cpId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="troneType != null" >
+        #{troneType,jdbcType=TINYINT},
+      </if>
+      <if test="usedCash != null" >
+        #{usedCash,jdbcType=DOUBLE},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="linkId != null" >
+        #{linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="trone != null" >
+        #{trone,jdbcType=VARCHAR},
+      </if>
+      <if test="mo != null" >
+        #{mo,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="spid != null" >
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=TINYINT},
+      </if>
+      <if test="disconnectTime != null" >
+        #{disconnectTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zsyj.fee.entity.SolarChargeCondition" resultType="java.lang.Integer" >
+    select count(*) from ${tableName}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ${tableName}
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userSid != null" >
+        user_sid = #{record.userSid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCid != null" >
+        user_cid = #{record.userCid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleId != null" >
+        sale_id = #{record.saleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.imsi != null" >
+        imsi = #{record.imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpId != null" >
+        cp_id = #{record.cpId,jdbcType=INTEGER},
+      </if>
+      <if test="record.appId != null" >
+        app_id = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.troneType != null" >
+        trone_type = #{record.troneType,jdbcType=TINYINT},
+      </if>
+      <if test="record.usedCash != null" >
+        used_cash = #{record.usedCash,jdbcType=DOUBLE},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkId != null" >
+        link_id = #{record.linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceCode != null" >
+        service_code = #{record.serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trone != null" >
+        trone = #{record.trone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mo != null" >
+        mo = #{record.mo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spid != null" >
+        spid = #{record.spid,jdbcType=INTEGER},
+      </if>
+      <if test="record.operator != null" >
+        operator = #{record.operator,jdbcType=TINYINT},
+      </if>
+      <if test="record.disconnectTime != null" >
+        disconnect_time = #{record.disconnectTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ${tableName}
+    set id = #{record.id,jdbcType=INTEGER},
+      user_sid = #{record.userSid,jdbcType=VARCHAR},
+      user_cid = #{record.userCid,jdbcType=VARCHAR},
+      sale_id = #{record.saleId,jdbcType=INTEGER},
+      imsi = #{record.imsi,jdbcType=VARCHAR},
+      cp_id = #{record.cpId,jdbcType=INTEGER},
+      app_id = #{record.appId,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      trone_type = #{record.troneType,jdbcType=TINYINT},
+      used_cash = #{record.usedCash,jdbcType=DOUBLE},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      link_id = #{record.linkId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      service_code = #{record.serviceCode,jdbcType=VARCHAR},
+      trone = #{record.trone,jdbcType=VARCHAR},
+      mo = #{record.mo,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      spid = #{record.spid,jdbcType=INTEGER},
+      operator = #{record.operator,jdbcType=TINYINT},
+      disconnect_time = #{record.disconnectTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.SolarCharge" >
+    update ${tableName}
+    <set >
+      <if test="userSid != null" >
+        user_sid = #{userSid,jdbcType=VARCHAR},
+      </if>
+      <if test="userCid != null" >
+        user_cid = #{userCid,jdbcType=VARCHAR},
+      </if>
+      <if test="saleId != null" >
+        sale_id = #{saleId,jdbcType=INTEGER},
+      </if>
+      <if test="imsi != null" >
+        imsi = #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="cpId != null" >
+        cp_id = #{cpId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="troneType != null" >
+        trone_type = #{troneType,jdbcType=TINYINT},
+      </if>
+      <if test="usedCash != null" >
+        used_cash = #{usedCash,jdbcType=DOUBLE},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="linkId != null" >
+        link_id = #{linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        service_code = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="trone != null" >
+        trone = #{trone,jdbcType=VARCHAR},
+      </if>
+      <if test="mo != null" >
+        mo = #{mo,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="spid != null" >
+        spid = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=TINYINT},
+      </if>
+      <if test="disconnectTime != null" >
+        disconnect_time = #{disconnectTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.SolarCharge" >
+    update ${tableName}
+    set user_sid = #{userSid,jdbcType=VARCHAR},
+      user_cid = #{userCid,jdbcType=VARCHAR},
+      sale_id = #{saleId,jdbcType=INTEGER},
+      imsi = #{imsi,jdbcType=VARCHAR},
+      cp_id = #{cpId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      trone_type = #{troneType,jdbcType=TINYINT},
+      used_cash = #{usedCash,jdbcType=DOUBLE},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      link_id = #{linkId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      service_code = #{serviceCode,jdbcType=VARCHAR},
+      trone = #{trone,jdbcType=VARCHAR},
+      mo = #{mo,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      spid = #{spid,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=TINYINT},
+      disconnect_time = #{disconnectTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="createNewTable" parameterType="String">
+  	CREATE TABLE IF NOT EXISTS ${tableName} (
+	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	  `user_sid` varchar(10) CHARACTER SET ascii DEFAULT NULL,
+	  `user_cid` varchar(15) COLLATE gb2312_bin DEFAULT NULL,
+	  `sale_id` int(11) DEFAULT NULL COMMENT '该计费所属业务员',
+	  `imsi` varchar(25) CHARACTER SET ascii DEFAULT NULL,
+	  `cp_id` int(11) DEFAULT NULL COMMENT '所属cp公司',
+	  `app_id` varchar(20) CHARACTER SET ascii DEFAULT NULL,
+	  `order_id` varchar(50) COLLATE gb2312_bin DEFAULT NULL,
+	  `trone_type` tinyint(8) DEFAULT NULL COMMENT '0--移动  1--联通  2--电信',
+	  `used_cash` double DEFAULT NULL COMMENT '商品价格',
+	  `mobile` varchar(15) CHARACTER SET ascii DEFAULT NULL,
+	  `link_id` varchar(50) CHARACTER SET ascii DEFAULT NULL,
+	  `status` varchar(10) COLLATE gb2312_bin DEFAULT NULL COMMENT '1未成功  其他失败',
+	  `service_code` varchar(50) COLLATE gb2312_bin DEFAULT NULL COMMENT '代码code',
+	  `trone` varchar(20) COLLATE gb2312_bin DEFAULT NULL,
+	  `mo` varchar(140) COLLATE gb2312_bin DEFAULT NULL,
+	  `area` varchar(6) COLLATE gb2312_bin DEFAULT '0000',
+	  `city` varchar(6) COLLATE gb2312_bin DEFAULT '0000',
+	  `spid` int(11) DEFAULT '0',
+	  `operator` tinyint(4) DEFAULT NULL COMMENT '垫付平台字段 -- 暂不考虑',
+	  `disconnect_time` datetime NOT NULL,
+	  PRIMARY KEY (`id`),
+	  UNIQUE KEY `NewIndex` (`link_id`),
+	  KEY `imsi` (`imsi`) USING BTREE
+	) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=gb2312 COLLATE=gb2312_bin;
+  </update>
+</mapper>

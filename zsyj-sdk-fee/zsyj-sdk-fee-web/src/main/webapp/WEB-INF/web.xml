@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>sdkfee</display-name>
+	
+	<servlet>
+	    <servlet-name>initServlet</servlet-name>
+	    <servlet-class>com.zsyj.fee.servlet.InitServlet</servlet-class>
+	    <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>initServlet</servlet-name>
+	    <url-pattern>/init</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>sdkLoginServlet</servlet-name>
+	    <servlet-class>com.zsyj.fee.servlet.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>sdkLoginServlet</servlet-name>
+	    <url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>paySerlvet</servlet-name>
+	    <servlet-class>com.zsyj.fee.servlet.PaySerlvet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>paySerlvet</servlet-name>
+	    <url-pattern>/pay</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>orderResultServlet</servlet-name>
+	    <servlet-class>com.zsyj.fee.servlet.OrderResultServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>orderResultServlet</servlet-name>
+	    <url-pattern>/orderResult</url-pattern>
+	</servlet-mapping>
+	
+	
+		
+	<error-page>
+		<error-code>404</error-code>
+		<location>/index.jsp</location>
+	</error-page>
+</web-app>

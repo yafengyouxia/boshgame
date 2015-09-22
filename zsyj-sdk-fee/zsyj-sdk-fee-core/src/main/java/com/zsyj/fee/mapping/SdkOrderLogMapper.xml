@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.SdkOrderLogMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.SdkOrderLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="servicecode" property="servicecode" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="imsi" property="imsi" jdbcType="VARCHAR" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="sale_id" property="saleId" jdbcType="INTEGER" />
+    <result column="cp_id" property="cpId" jdbcType="INTEGER" />
+    <result column="sid" property="sid" jdbcType="VARCHAR" />
+    <result column="cid" property="cid" jdbcType="VARCHAR" />
+    <result column="fee_times" property="feeTimes" jdbcType="INTEGER" />
+    <result column="operator_type" property="operatorType" jdbcType="TINYINT" />
+    <result column="order_type" property="orderType" jdbcType="TINYINT" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="tel_code" property="telCode" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="spid" property="spid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="logTime" property="logtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="SpData" type="com.zsyj.fee.vo.SpData" >
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="spId" property="spId" jdbcType="INTEGER" />
+    <result column="serviceCode" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="successMoney" property="successMoney" jdbcType="DOUBLE" />
+    <result column="successNum" property="successNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, servicecode, content, order_id, imsi, uuid, mobile, appid, sale_id, cp_id, sid, 
+    cid, fee_times, operator_type, area_code, tel_code, price, spid, order_type, status, logTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.SdkOrderLogCondition" >
+    select
+    <include refid="Base_Column_List" />
+    from  ${tableName}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by #{orderByClause,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sdk_order_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectSpData" resultMap="SpData" parameterType="com.zsyj.fee.entity.SdkOrderLogCondition">
+    select spid spId,
+    		SUM(case when status=1 then 1 else 0 end) successNum,
+    		SUM(case when status=1 then price else 0 end) successMoney
+		from ${tableName}
+	<if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>	 
+	GROUP BY spid 
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sdk_order_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.SdkOrderLog" >
+    insert into ${tableName}  (id, servicecode, content, 
+      order_id, imsi, uuid, 
+      mobile, appid, sale_id, 
+      cp_id, sid, cid, fee_times, 
+      operator_type, order_type, area_code, tel_code, 
+      price, spid, status, 
+      logTime)
+    values (#{id,jdbcType=INTEGER}, #{servicecode,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=VARCHAR}, #{imsi,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, #{saleId,jdbcType=INTEGER}, 
+      #{cpId,jdbcType=INTEGER}, #{sid,jdbcType=VARCHAR}, #{cid,jdbcType=VARCHAR}, #{feeTimes,jdbcType=INTEGER}, 
+      #{operatorType,jdbcType=TINYINT}, #{orderType,jdbcType=TINYINT}, #{areaCode,jdbcType=VARCHAR}, #{telCode,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{spid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{logtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.SdkOrderLog" >
+    insert into ${tableName}
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="servicecode != null" >
+        servicecode,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="imsi != null" >
+        imsi,
+      </if>
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="cpId != null" >
+        cp_id,
+      </if>
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="feeTimes != null" >
+        fee_times,
+      </if>
+      <if test="operatorType != null" >
+        operator_type,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="telCode != null" >
+        tel_code,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="spid != null" >
+        spid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="logtime != null" >
+        logTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="servicecode != null" >
+        #{servicecode,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="imsi != null" >
+        #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="saleId != null" >
+        #{saleId,jdbcType=INTEGER},
+      </if>
+      <if test="cpId != null" >
+        #{cpId,jdbcType=INTEGER},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="feeTimes != null" >
+        #{feeTimes,jdbcType=INTEGER},
+      </if>
+      <if test="operatorType != null" >
+        #{operatorType,jdbcType=TINYINT},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=TINYINT},
+      </if>      
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="telCode != null" >
+        #{telCode,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="spid != null" >
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="logtime != null" >
+        #{logtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zsyj.fee.entity.SdkOrderLogCondition" resultType="java.lang.Integer" >
+    select count(*) from ${tableName} 
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ${tableName} 
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.servicecode != null" >
+        servicecode = #{record.servicecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imsi != null" >
+        imsi = #{record.imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appid != null" >
+        appid = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleId != null" >
+        sale_id = #{record.saleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpId != null" >
+        cp_id = #{record.cpId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeTimes != null" >
+        fee_times = #{record.feeTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorType != null" >
+        operator_type = #{record.operatorType,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderType != null" >
+        order_type = #{record.orderType,jdbcType=TINYINT},
+      </if>      
+      <if test="record.areaCode != null" >
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telCode != null" >
+        tel_code = #{record.telCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.spid != null" >
+        spid = #{record.spid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ${tableName} 
+    set id = #{record.id,jdbcType=INTEGER},
+      servicecode = #{record.servicecode,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      imsi = #{record.imsi,jdbcType=VARCHAR},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      appid = #{record.appid,jdbcType=VARCHAR},
+      sale_id = #{record.saleId,jdbcType=INTEGER},
+      cp_id = #{record.cpId,jdbcType=INTEGER},
+      sid = #{record.sid,jdbcType=VARCHAR},
+      cid = #{record.cid,jdbcType=VARCHAR},
+      fee_times = #{record.feeTimes,jdbcType=INTEGER},
+      operator_type = #{record.operatorType,jdbcType=TINYINT},
+      order_type = #{record.orderType,jdbcType=TINYINT},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      tel_code = #{record.telCode,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      spid = #{record.spid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      logTime = #{record.logtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map" >
+    update ${tableName}
+    <set >
+      <if test="record.servicecode != null" >
+        servicecode = #{record.servicecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imsi != null" >
+        imsi = #{record.imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appid != null" >
+        appid = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleId != null" >
+        sale_id = #{record.saleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpId != null" >
+        cp_id = #{record.cpId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeTimes != null" >
+        fee_times = #{record.feeTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorType != null" >
+        operator_type = #{record.operatorType,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderType != null" >
+        order_type = #{record.orderType,jdbcType=TINYINT},
+      </if>      
+      <if test="record.areaCode != null" >
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telCode != null" >
+        tel_code = #{record.telCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.spid != null" >
+        spid = #{record.spid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.logtime != null" >
+        logTime = #{record.logtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{record.id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="map" >
+    update ${tableName}
+    set servicecode = #{record.servicecode,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      imsi = #{record.imsi,jdbcType=VARCHAR},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      appid = #{record.appid,jdbcType=VARCHAR},
+      sale_id = #{record.saleId,jdbcType=INTEGER},
+      cp_id = #{record.cpId,jdbcType=INTEGER},
+      sid = #{record.sid,jdbcType=VARCHAR},
+      cid = #{record.cid,jdbcType=VARCHAR},
+      fee_times = #{record.feeTimes,jdbcType=INTEGER},
+      operator_type = #{record.operatorType,jdbcType=TINYINT},
+      order_type = #{record.orderType,jdbcType=TINYINT},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      tel_code = #{record.telCode,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      spid = #{record.spid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      logTime = #{record.logtime,jdbcType=TIMESTAMP}
+    where id = #{record.id,jdbcType=INTEGER}
+  </update>
+  <update id="createNewTable" parameterType="String">
+  	CREATE TABLE IF NOT EXISTS ${tableName} (
+	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	  `servicecode` varchar(50) CHARACTER SET ascii DEFAULT NULL COMMENT '代码code',
+	  `content` varchar(256) CHARACTER SET ascii NOT NULL,
+	  `order_id` varchar(50) CHARACTER SET ascii DEFAULT NULL,
+	  `imsi` varchar(50) CHARACTER SET ascii DEFAULT NULL,
+	  `uuid` varchar(50) CHARACTER SET ascii DEFAULT NULL,
+	  `mobile` varchar(15) CHARACTER SET ascii DEFAULT NULL,
+	  `appid` varchar(10) CHARACTER SET ascii DEFAULT NULL,
+	  `sale_id` int(11) DEFAULT NULL,
+	  `cp_id` int(11) DEFAULT NULL,
+	  `sid` varchar(10) CHARACTER SET ascii DEFAULT NULL,
+	  `cid` varchar(15) CHARACTER SET ascii DEFAULT NULL,
+	  `fee_times` int(2) DEFAULT NULL,
+	  `operator_type` tinyint(4) DEFAULT NULL COMMENT '-1 -- Unkonw   0 -- CMCC  1 -- CU 2 -- CT',
+	  `area_code` varchar(6) CHARACTER SET ascii DEFAULT NULL,
+	  `tel_code` varchar(6) CHARACTER SET ascii DEFAULT NULL,
+	  `price` double DEFAULT '1' COMMENT '价格；分/条',
+	  `spid` int(11) DEFAULT '0',
+	  `order_type` tinyint(4) DEFAULT '0' COMMENT ' 0--计费  1--pv刷用户付费率  ',
+	  `status` int(11) DEFAULT '0' COMMENT '0 -- 已分配   1 -- 发送成功   2 -- 计费成功',
+	  `logTime` datetime NOT NULL,
+	  PRIMARY KEY (`id`),
+  	  KEY `NewIndex3` (`imsi`) USING BTREE,
+      KEY `order_id` (`order_id`)
+	) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gb2312;
+  </update>
+</mapper>

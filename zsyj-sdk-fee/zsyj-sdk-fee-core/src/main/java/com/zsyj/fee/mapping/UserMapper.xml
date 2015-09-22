@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.User" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="mid" property="mid" jdbcType="VARCHAR" />
+    <result column="imsi" property="imsi" jdbcType="VARCHAR" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="sid" property="sid" jdbcType="VARCHAR" />
+    <result column="cid" property="cid" jdbcType="VARCHAR" />
+    <result column="cpid" property="cpid" jdbcType="VARCHAR" />
+    <result column="soft_version" property="softVersion" jdbcType="VARCHAR" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="tel_code" property="telCode" jdbcType="VARCHAR" />
+    <result column="smscenter" property="smscenter" jdbcType="VARCHAR" />
+    <result column="trone_type" property="troneType" jdbcType="TINYINT" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="android_version" property="androidVersion" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="first_visit_time" property="firstVisitTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, mid, imsi, imei, appid, mobile, sid, cid, cpid, soft_version, area_code, tel_code, 
+    smscenter, trone_type, model, android_version, update_time, type, ip, first_visit_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.UserCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from users
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.User" >
+    insert into users (uuid, mid, imsi, 
+      imei, appid, mobile, 
+      sid, cid, cpid, soft_version, 
+      area_code, tel_code, smscenter, 
+      trone_type, model, android_version, 
+      update_time, type, ip, 
+      first_visit_time)
+    values (#{uuid,jdbcType=VARCHAR}, #{mid,jdbcType=VARCHAR}, #{imsi,jdbcType=VARCHAR}, 
+      #{imei,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{sid,jdbcType=VARCHAR}, #{cid,jdbcType=VARCHAR}, #{cpid,jdbcType=VARCHAR}, #{softVersion,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{telCode,jdbcType=VARCHAR}, #{smscenter,jdbcType=VARCHAR}, 
+      #{troneType,jdbcType=TINYINT}, #{model,jdbcType=VARCHAR}, #{androidVersion,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, #{ip,jdbcType=VARCHAR}, 
+      #{firstVisitTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.User" >
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="imsi != null" >
+        imsi,
+      </if>
+      <if test="imei != null" >
+        imei,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="cpid != null" >
+        cpid,
+      </if>
+      <if test="softVersion != null" >
+        soft_version,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="telCode != null" >
+        tel_code,
+      </if>
+      <if test="smscenter != null" >
+        smscenter,
+      </if>
+      <if test="troneType != null" >
+        trone_type,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="androidVersion != null" >
+        android_version,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="firstVisitTime != null" >
+        first_visit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="imsi != null" >
+        #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="cpid != null" >
+        #{cpid,jdbcType=VARCHAR},
+      </if>
+      <if test="softVersion != null" >
+        #{softVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="telCode != null" >
+        #{telCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smscenter != null" >
+        #{smscenter,jdbcType=VARCHAR},
+      </if>
+      <if test="troneType != null" >
+        #{troneType,jdbcType=TINYINT},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="androidVersion != null" >
+        #{androidVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="firstVisitTime != null" >
+        #{firstVisitTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update users
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imsi != null" >
+        imsi = #{record.imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imei != null" >
+        imei = #{record.imei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appid != null" >
+        appid = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpid != null" >
+        cpid = #{record.cpid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.softVersion != null" >
+        soft_version = #{record.softVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null" >
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telCode != null" >
+        tel_code = #{record.telCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smscenter != null" >
+        smscenter = #{record.smscenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.troneType != null" >
+        trone_type = #{record.troneType,jdbcType=TINYINT},
+      </if>
+      <if test="record.model != null" >
+        model = #{record.model,jdbcType=VARCHAR},
+      </if>
+      <if test="record.androidVersion != null" >
+        android_version = #{record.androidVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.ip != null" >
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstVisitTime != null" >
+        first_visit_time = #{record.firstVisitTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update users
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      mid = #{record.mid,jdbcType=VARCHAR},
+      imsi = #{record.imsi,jdbcType=VARCHAR},
+      imei = #{record.imei,jdbcType=VARCHAR},
+      appid = #{record.appid,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      sid = #{record.sid,jdbcType=VARCHAR},
+      cid = #{record.cid,jdbcType=VARCHAR},
+      cpid = #{record.cpid,jdbcType=VARCHAR},
+      soft_version = #{record.softVersion,jdbcType=VARCHAR},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      tel_code = #{record.telCode,jdbcType=VARCHAR},
+      smscenter = #{record.smscenter,jdbcType=VARCHAR},
+      trone_type = #{record.troneType,jdbcType=TINYINT},
+      model = #{record.model,jdbcType=VARCHAR},
+      android_version = #{record.androidVersion,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=TINYINT},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      first_visit_time = #{record.firstVisitTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.User" >
+    update users
+    <set >
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="imsi != null" >
+        imsi = #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null" >
+        sid = #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="cpid != null" >
+        cpid = #{cpid,jdbcType=VARCHAR},
+      </if>
+      <if test="softVersion != null" >
+        soft_version = #{softVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="telCode != null" >
+        tel_code = #{telCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smscenter != null" >
+        smscenter = #{smscenter,jdbcType=VARCHAR},
+      </if>
+      <if test="troneType != null" >
+        trone_type = #{troneType,jdbcType=TINYINT},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="androidVersion != null" >
+        android_version = #{androidVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="firstVisitTime != null" >
+        first_visit_time = #{firstVisitTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.User" >
+    update users
+    set mid = #{mid,jdbcType=VARCHAR},
+      imsi = #{imsi,jdbcType=VARCHAR},
+      imei = #{imei,jdbcType=VARCHAR},
+      appid = #{appid,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=VARCHAR},
+      cid = #{cid,jdbcType=VARCHAR},
+      cpid = #{cpid,jdbcType=VARCHAR},
+      soft_version = #{softVersion,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      tel_code = #{telCode,jdbcType=VARCHAR},
+      smscenter = #{smscenter,jdbcType=VARCHAR},
+      trone_type = #{troneType,jdbcType=TINYINT},
+      model = #{model,jdbcType=VARCHAR},
+      android_version = #{androidVersion,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=TINYINT},
+      ip = #{ip,jdbcType=VARCHAR},
+      first_visit_time = #{firstVisitTime,jdbcType=TIMESTAMP}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zsyj.fee.dao.CfgSubMapper" >
+  <resultMap id="BaseResultMap" type="com.zsyj.fee.entity.CfgSub" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="MAIN_ID" property="mainId" jdbcType="INTEGER" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="service_code" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="HINT_TYPE" property="hintType" jdbcType="VARCHAR" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="INTEGER" />
+    <result column="TIMES" property="times" jdbcType="INTEGER" />
+    <result column="FEE_ID" property="feeId" jdbcType="VARCHAR" />
+    <result column="MAXCOUNT" property="maxcount" jdbcType="INTEGER" />
+    <result column="HINT_TIMES" property="hintTimes" jdbcType="INTEGER" />
+    <result column="HINT_INTERVAL" property="hintInterval" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, MAIN_ID, AREA_CODE, TYPE, service_code, HINT_TYPE, FEE_TYPE, TIMES, FEE_ID, MAXCOUNT, 
+    HINT_TIMES, HINT_INTERVAL, status, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zsyj.fee.entity.CfgSubCondition" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cfg_sub
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cfg_sub
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cfg_sub
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zsyj.fee.entity.CfgSubCondition" >
+    delete from cfg_sub
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zsyj.fee.entity.CfgSub" >
+    insert into cfg_sub (ID, MAIN_ID, AREA_CODE, 
+      TYPE, service_code, HINT_TYPE, 
+      FEE_TYPE, TIMES, FEE_ID, 
+      MAXCOUNT, HINT_TIMES, HINT_INTERVAL, 
+      status, update_time)
+    values (#{id,jdbcType=INTEGER}, #{mainId,jdbcType=INTEGER}, #{areaCode,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{serviceCode,jdbcType=VARCHAR}, #{hintType,jdbcType=VARCHAR}, 
+      #{feeType,jdbcType=INTEGER}, #{times,jdbcType=INTEGER}, #{feeId,jdbcType=VARCHAR}, 
+      #{maxcount,jdbcType=INTEGER}, #{hintTimes,jdbcType=INTEGER}, #{hintInterval,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsyj.fee.entity.CfgSub" >
+    insert into cfg_sub
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="mainId != null" >
+        MAIN_ID,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="serviceCode != null" >
+        service_code,
+      </if>
+      <if test="hintType != null" >
+        HINT_TYPE,
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE,
+      </if>
+      <if test="times != null" >
+        TIMES,
+      </if>
+      <if test="feeId != null" >
+        FEE_ID,
+      </if>
+      <if test="maxcount != null" >
+        MAXCOUNT,
+      </if>
+      <if test="hintTimes != null" >
+        HINT_TIMES,
+      </if>
+      <if test="hintInterval != null" >
+        HINT_INTERVAL,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mainId != null" >
+        #{mainId,jdbcType=INTEGER},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hintType != null" >
+        #{hintType,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="times != null" >
+        #{times,jdbcType=INTEGER},
+      </if>
+      <if test="feeId != null" >
+        #{feeId,jdbcType=VARCHAR},
+      </if>
+      <if test="maxcount != null" >
+        #{maxcount,jdbcType=INTEGER},
+      </if>
+      <if test="hintTimes != null" >
+        #{hintTimes,jdbcType=INTEGER},
+      </if>
+      <if test="hintInterval != null" >
+        #{hintInterval,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zsyj.fee.entity.CfgSubCondition" resultType="java.lang.Integer" >
+    select count(*) from cfg_sub
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cfg_sub
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.mainId != null" >
+        MAIN_ID = #{record.mainId,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaCode != null" >
+        AREA_CODE = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceCode != null" >
+        service_code = #{record.serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hintType != null" >
+        HINT_TYPE = #{record.hintType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeType != null" >
+        FEE_TYPE = #{record.feeType,jdbcType=INTEGER},
+      </if>
+      <if test="record.times != null" >
+        TIMES = #{record.times,jdbcType=INTEGER},
+      </if>
+      <if test="record.feeId != null" >
+        FEE_ID = #{record.feeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxcount != null" >
+        MAXCOUNT = #{record.maxcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.hintTimes != null" >
+        HINT_TIMES = #{record.hintTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.hintInterval != null" >
+        HINT_INTERVAL = #{record.hintInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cfg_sub
+    set ID = #{record.id,jdbcType=INTEGER},
+      MAIN_ID = #{record.mainId,jdbcType=INTEGER},
+      AREA_CODE = #{record.areaCode,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      service_code = #{record.serviceCode,jdbcType=VARCHAR},
+      HINT_TYPE = #{record.hintType,jdbcType=VARCHAR},
+      FEE_TYPE = #{record.feeType,jdbcType=INTEGER},
+      TIMES = #{record.times,jdbcType=INTEGER},
+      FEE_ID = #{record.feeId,jdbcType=VARCHAR},
+      MAXCOUNT = #{record.maxcount,jdbcType=INTEGER},
+      HINT_TIMES = #{record.hintTimes,jdbcType=INTEGER},
+      HINT_INTERVAL = #{record.hintInterval,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsyj.fee.entity.CfgSub" >
+    update cfg_sub
+    <set >
+      <if test="mainId != null" >
+        MAIN_ID = #{mainId,jdbcType=INTEGER},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        service_code = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hintType != null" >
+        HINT_TYPE = #{hintType,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE = #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="times != null" >
+        TIMES = #{times,jdbcType=INTEGER},
+      </if>
+      <if test="feeId != null" >
+        FEE_ID = #{feeId,jdbcType=VARCHAR},
+      </if>
+      <if test="maxcount != null" >
+        MAXCOUNT = #{maxcount,jdbcType=INTEGER},
+      </if>
+      <if test="hintTimes != null" >
+        HINT_TIMES = #{hintTimes,jdbcType=INTEGER},
+      </if>
+      <if test="hintInterval != null" >
+        HINT_INTERVAL = #{hintInterval,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsyj.fee.entity.CfgSub" >
+    update cfg_sub
+    set MAIN_ID = #{mainId,jdbcType=INTEGER},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      service_code = #{serviceCode,jdbcType=VARCHAR},
+      HINT_TYPE = #{hintType,jdbcType=VARCHAR},
+      FEE_TYPE = #{feeType,jdbcType=INTEGER},
+      TIMES = #{times,jdbcType=INTEGER},
+      FEE_ID = #{feeId,jdbcType=VARCHAR},
+      MAXCOUNT = #{maxcount,jdbcType=INTEGER},
+      HINT_TIMES = #{hintTimes,jdbcType=INTEGER},
+      HINT_INTERVAL = #{hintInterval,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
